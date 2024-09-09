@@ -74,7 +74,7 @@ class AdminController extends Controller
         if (!$user) {
             return redirect()->back()->with('error', 'User not found');
         }
-        $user->status = ($user->status == 'Aktif') ? 'Non Aktif' : 'Aktif';
+        $user->status = ($user->status == true) ? false : true;
         $user->save();
         return redirect()->back()->with('success', 'User status updated successfully');
     }

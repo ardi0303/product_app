@@ -44,10 +44,10 @@ class User extends Authenticatable
     ];
     public static function countData()
     {
-        return self::count();
+        return self::where('usertype', 'user')->count();
     }
     public static function countDataActive()
     {
-        return self::where('status', 'aktif')->count();
+        return self::where('status', true)->count();
     }
 }

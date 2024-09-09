@@ -34,42 +34,56 @@
                 </thead>
                 <tbody>
                     @php
-                        $no = 1;   
+                        $no = 1;
                     @endphp
                     @foreach ($data as $row)
-                    <tr>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">{{ $no++ }}</p>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <div class="flex items-center">
+                        <tr>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <p class="text-gray-900 whitespace-no-wrap">{{ $no++ }}</p>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <div class="flex items-center">
+                                    <p class="text-gray-900 whitespace-no-wrap">
+                                        {{ $row->name }}
+                                    </p>
+                                </div>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <p class="text-gray-900 whitespace-no-wrap">{{ $row->email }}</p>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                 <p class="text-gray-900 whitespace-no-wrap">
-                                    {{ $row->name }}
+                                    {{ $row->created_at }}
                                 </p>
-                            </div>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">{{ $row->email }}</p>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <p class="text-gray-900 whitespace-no-wrap">
-                                {{ $row->created_at }}
-                            </p>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <span
-                                class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
-                                <span aria-hidden
-                                    class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
-                                <span class="relative">{{ $row->status }}</span>
-                            </span>
-                        </td>
-                        <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <a href="/edit_user_status/{{ $row->id }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                Edit
-                            </a>
-                        </td>
-                    </tr>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                <span
+                                    class="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                    <span aria-hidden
+                                        class="absolute inset-0 bg-green-200 opacity-50 rounded-full"></span>
+                                    <span class="relative">
+                                        @if ($row->status)
+                                            active
+                                        @else
+                                            non active
+                                        @endif
+                                    </span>
+                                </span>
+                            </td>
+                            <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                                @php
+                                    $isVerified = $row->status;
+                                    $buttonColor = $isVerified
+                                        ? 'bg-green-500 hover:bg-green-700'
+                                        : 'bg-red-500 hover:bg-red-700';
+                                    $buttonText = $isVerified ? 'Unverification' : 'Verification';
+                                @endphp
+                                <a href="/edit_user_status/{{ $row->id }}"
+                                    class="{{ $buttonColor }} text-white font-bold py-2 px-4 rounded">
+                                    {{ $buttonText }}
+                                </a>
+                            </td>
+                        </tr>
                     @endforeach
                 </tbody>
             </table>
